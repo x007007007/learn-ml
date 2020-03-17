@@ -12,11 +12,28 @@ pipeline {
             }
             post {
                 success {
-                  githubNotify description: 'Check & Installed ENV', status: 'SUCCESS'
+                  githubNotify description: 'Check & Installed ENV', status: 'SUCCESS', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
                 }
                 failure {
-                  githubNotify description: 'Check & Installed ENV', status: 'FAILURE'
+                  githubNotify description: 'Check & Installed ENV', status: 'FAILURE', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
                 }
+            }
+        }
+    }
+    stages("Download resource") {
+        steps {
+            bat "
+            pytorch\\venv\\scripts\\activate
+            cd pytorch
+            python cnn download.py
+            "
+        }
+        post {
+            success {
+              githubNotify description: 'download resource', status: 'SUCCESS', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+            }
+            failure {
+              githubNotify description: 'download resource', status: 'FAILURE', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
             }
         }
     }
