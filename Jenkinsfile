@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
     stages {
         stage('Check & install env') {
             githubNotify status: "PENDING", credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
