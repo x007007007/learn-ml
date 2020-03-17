@@ -25,13 +25,13 @@ pipeline {
             echo 'One way or another, I have finished'
         }
         success {
-            githubNotify status: "SUCCESS", credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+            githubNotify status: "SUCCESS", description: "DONE", credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
         }
         unstable {
-            githubNotify status: "ERROR", credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+            githubNotify status: "SUCCESS", description: "UNSTABLE", credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
         }
         failure {
-            githubNotify status: "FAILURE", credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+            githubNotify status: "FAILURE", description: "FAILURE", credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
         }
         changed {
             echo 'Things were different before...'
