@@ -13,6 +13,6 @@ if not os.path.exists(VENV_PATH):
     import venv
     venv.create(VENV_PATH, with_pip=True, prompt="pytorch-venv")
 
-install_arguments = [PYTORCH_PIP_PATH, "-r", PYTORCH_PIP_requirement]
+install_arguments = [PYTORCH_PIP_PATH, "install", "-r", PYTORCH_PIP_requirement]
 subprocess.call(install_arguments, shell=True)
 
