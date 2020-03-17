@@ -4,13 +4,19 @@ pipeline {
         pollSCM('H/5 * * * *')
     }
     stages {
-        stage('Check & install env') {
-            githubNotify status: "PENDING", credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
-
+        stage('Check & Install env') {
             steps {
                 bat "pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/"
                 bat "pip config set global.trusted-host mirrors.aliyun.com"
                 bat "python initial-env.py "
+            }
+            post {
+                success {
+                  githubNotify description: 'Check & Installed ENV', status: 'SUCCESS'
+                }
+                failure {
+                  githubNotify description: 'Check & Installed ENV', status: 'FAILURE'
+                }
             }
         }
     }
