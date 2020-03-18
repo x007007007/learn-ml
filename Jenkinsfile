@@ -36,6 +36,23 @@ pipeline {
                 }
             }
         }
+        stage("run learn")  {
+            steps {
+                bat """
+                    call pytorch\\venv\\scripts\\activate
+                    cd pytorch
+                    python cnn\\cnn1.py
+                """
+            }
+            post {
+                success {
+                  githubNotify description: 'download resource', status: 'SUCCESS', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+                }
+                failure {
+                  githubNotify description: 'download resource', status: 'FAILURE', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+                }
+            }
+        }
     }
     post {
         always {
