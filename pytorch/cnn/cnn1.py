@@ -38,8 +38,7 @@ class CNN(nn.Module):
         output = self.out(x)
         return output
 
-cnn = CNN()
-print(cnn)  # net architecture
+
 
 
 def train():
@@ -59,6 +58,7 @@ def train():
     test_data = torchvision.datasets.MNIST(root='./data/', train=False)
     # 为了节约时间, 我们测试时只测试前2000个
 
+    cnn = CNN()
 
     optimizer = torch.optim.Adam(cnn.parameters(), lr=LR)  # optimize all cnn parameters
     loss_func = nn.CrossEntropyLoss()  # the target label is not one-hotted

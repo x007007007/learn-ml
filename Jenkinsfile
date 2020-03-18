@@ -23,8 +23,8 @@ pipeline {
             steps {
                 bat """
                     call pytorch\\venv\\scripts\\activate
-                    cd pytorch
-                    python cnn\\data\\download.py
+                    cd pytorch\\cnn\\data
+                    call download.py
                 """
             }
             post {
@@ -41,7 +41,7 @@ pipeline {
                 bat """
                     call pytorch\\venv\\scripts\\activate
                     cd pytorch\\cnn
-                    python cnn1.py
+                    call python cnn1.py
                 """
             }
             post {
