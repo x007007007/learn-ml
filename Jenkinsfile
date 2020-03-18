@@ -40,8 +40,8 @@ pipeline {
             steps {
                 bat """
                     call pytorch\\venv\\scripts\\activate
-                    cd pytorch
-                    python cnn\\cnn1.py
+                    cd pytorch\\cnn
+                    python cnn1.py
                 """
             }
             post {

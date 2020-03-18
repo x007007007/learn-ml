@@ -9,9 +9,6 @@ import torch
 torch.manual_seed(1)    # reproducible
 
 
-
-
-
 class CNN(nn.Module):
     def __init__(self):
         super(CNN, self).__init__()
@@ -34,38 +31,22 @@ class CNN(nn.Module):
         self.out = nn.Linear(32 * 7 * 7, 10)   # fully connected layer, output 10 classes
 
     def forward(self, x):
-        x = self.conv1(x)
-        x = self.conv2(x)
-        x = x.view(x.size(0), -1)   # 展平多维的卷积图成 (batch_size, 32 * 7 * 7)
+        l1 = self.conv1(x)
+        l2 = self.conv2(l1)
+        print("l2", l2)
+        x = l2.view(x.size(0), -1)   # 展平多维的卷积图成 (batch_size, 32 * 7 * 7)
         output = self.out(x)
         return output
 
 cnn = CNN()
 print(cnn)  # net architecture
-"""
-CNN (
-  (conv1): Sequential (
-    (0): Conv2d(1, 16, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
-    (1): ReLU ()
-    (2): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
-  )
-  (conv2): Sequential (
-    (0): Conv2d(16, 32, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
-    (1): ReLU ()
-    (2): MaxPool2d (size=(2, 2), stride=(2, 2), dilation=(1, 1))
-  )
-  (out): Linear (1568 -> 10)
-)
-"""
-
 
 
 def train():
     # Hyper Parameters
-    EPOCH = 1  # 训练整批数据多少次, 为了节约时间, 我们只训练一次
+    EPOCH = 10  # 训练整批数据多少次, 为了节约时间, 我们只训练一次
     BATCH_SIZE = 50
     LR = 0.001  # 学习率
-
 
     train_data = torchvision.datasets.MNIST(
         root='./data',  # 保存或者提取位置
@@ -90,7 +71,6 @@ def train():
             optimizer.zero_grad()  # clear gradients for this training step
             loss.backward()  # backpropagation, compute gradients
             optimizer.step()  # apply gradients
-
 
 if __name__ == '__main__':
     train()
