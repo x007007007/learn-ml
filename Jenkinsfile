@@ -25,7 +25,7 @@ pipeline {
             bat "
             pytorch\\venv\\scripts\\activate
             cd pytorch
-            python cnn\\download.py
+            python cnn\\data\\download.py
             "
         }
         post {
