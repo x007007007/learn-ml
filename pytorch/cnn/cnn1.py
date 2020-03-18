@@ -59,6 +59,9 @@ def train():
     # 为了节约时间, 我们测试时只测试前2000个
 
     cnn = CNN()
+    if torch.cuda.is_available():
+        cnn = CNN().cuda()
+
 
     optimizer = torch.optim.Adam(cnn.parameters(), lr=LR)  # optimize all cnn parameters
     loss_func = nn.CrossEntropyLoss()  # the target label is not one-hotted
@@ -66,6 +69,7 @@ def train():
     # training and testing
     for epoch in range(EPOCH):
         for step, (b_x, b_y) in enumerate(train_loader):  # 分配 batch data, normalize x when iterate train_loader
+
             output = cnn(b_x)  # cnn output
             loss = loss_func(output, b_y)  # cross entropy loss
             optimizer.zero_grad()  # clear gradients for this training step
