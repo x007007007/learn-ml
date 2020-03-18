@@ -22,11 +22,11 @@ pipeline {
     }
     stages("Download resource") {
         steps {
-            bat "
+            bat """
             pytorch\\venv\\scripts\\activate
             cd pytorch
             python cnn\\data\\download.py
-            "
+            """
         }
         post {
             success {
