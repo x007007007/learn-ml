@@ -23,9 +23,9 @@ pipeline {
     stages("Download resource") {
         steps {
             bat """
-            pytorch\\venv\\scripts\\activate
-            cd pytorch
-            python cnn\\data\\download.py
+                call pytorch\\venv\\scripts\\activate
+                cd pytorch
+                python cnn\\data\\download.py
             """
         }
         post {
