@@ -19,21 +19,21 @@ pipeline {
                 }
             }
         }
-    }
-    stages("Download resource") {
-        steps {
-            bat """
-                call pytorch\\venv\\scripts\\activate
-                cd pytorch
-                python cnn\\data\\download.py
-            """
-        }
-        post {
-            success {
-              githubNotify description: 'download resource', status: 'SUCCESS', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+        stage("Download resource")  {
+            steps {
+                bat """
+                    call pytorch\\venv\\scripts\\activate
+                    cd pytorch
+                    python cnn\\data\\download.py
+                """
             }
-            failure {
-              githubNotify description: 'download resource', status: 'FAILURE', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+            post {
+                success {
+                  githubNotify description: 'download resource', status: 'SUCCESS', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+                }
+                failure {
+                  githubNotify description: 'download resource', status: 'FAILURE', credentialsId: "github-x007007007-token", account: "x007007007", repo: "learn-ml"
+                }
             }
         }
     }
