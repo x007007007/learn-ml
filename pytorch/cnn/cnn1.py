@@ -33,16 +33,14 @@ class CNN(nn.Module):
     def forward(self, x):
         l1 = self.conv1(x)
         l2 = self.conv2(l1)
-        print("l2", l2)
         x = l2.view(x.size(0), -1)   # 展平多维的卷积图成 (batch_size, 32 * 7 * 7)
         output = self.out(x)
         return output
 
 
-
-
 def train():
     # Hyper Parameters
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     EPOCH = 10  # 训练整批数据多少次, 为了节约时间, 我们只训练一次
     BATCH_SIZE = 50
     LR = 0.001  # 学习率
@@ -60,7 +58,7 @@ def train():
 
     cnn = CNN()
     if torch.cuda.is_available():
-        cnn = CNN().cuda()
+        cnn = CNN().to(device)
 
 
     optimizer = torch.optim.Adam(cnn.parameters(), lr=LR)  # optimize all cnn parameters
@@ -69,7 +67,7 @@ def train():
     # training and testing
     for epoch in range(EPOCH):
         for step, (b_x, b_y) in enumerate(train_loader):  # 分配 batch data, normalize x when iterate train_loader
-
+            b_x, b_y = b_x.to(device), b_y.to(device)
             output = cnn(b_x)  # cnn output
             loss = loss_func(output, b_y)  # cross entropy loss
             optimizer.zero_grad()  # clear gradients for this training step
